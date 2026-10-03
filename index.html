@@ -1,11 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GitFlow Lab — Aprende Git y GitHub practicando</title>
+<meta name="description" content="Curso interactivo con terminal simulada: crea un proyecto, haz commits, ramas, push y pull a GitHub, resuelve conflictos y practica con retos. Por Kdna Studio.">
+<meta name="theme-color" content="#0a0e1a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0e1a'/%3E%3Cg stroke='%23ff7a45' stroke-width='2.4' fill='none' stroke-linecap='round'%3E%3Cpath d='M10 8v16M10 14c0-4 12-2 12-6'/%3E%3C/g%3E%3Cg fill='%2335e0c2'%3E%3Ccircle cx='10' cy='8' r='3'/%3E%3Ccircle cx='10' cy='24' r='3'/%3E%3Ccircle cx='22' cy='8' r='3'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
+<header class="top">
+  <a class="brand" href="./" aria-label="GitFlow Lab, inicio">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#131a2e"/><g stroke="#ff7a45" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M10 8v16M10 14c0-4 12-2 12-6"/></g><g fill="#35e0c2"><circle cx="10" cy="8" r="3"/><circle cx="10" cy="24" r="3"/><circle cx="22" cy="8" r="3"/></g></svg>
+    <span class="brand-txt"><b>GitFlow<em>Lab</em></b><small>por kdnastudio.com</small></span>
+  </a>
+  <nav class="nav" id="nav" aria-label="Secciones"></nav>
+  <div class="prog" id="prog" title="Tu progreso"></div>
+</header>
+
+<div class="seg" id="seg" role="tablist" aria-label="Panel">
+  <button role="tab" data-pane="lesson" class="on">Lección</button>
+  <button role="tab" data-pane="term">Terminal</button>
+</div>
+
+<main class="layout" id="main">
+  <aside class="side" id="side" aria-label="Índice"></aside>
+  <section class="lesson" id="lesson" aria-live="polite"></section>
+  <section class="labpane" id="labpane">
+    <div class="term" id="term">
+      <div class="term-head">
+        <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <span class="term-title">terminal simulada · dev@kdna</span>
+        <label class="sw"><input type="checkbox" id="explainSw" checked><span>Explicar comandos</span></label>
+        <button class="mini" id="btnReset" title="Reinicia el escenario de esta lección">↺ Reiniciar</button>
+      </div>
+      <div class="term-body" id="tbody">
+        <div id="tout"></div>
+        <div class="prompt-line"><span id="ps1" class="ps1"></span><input id="tin" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-label="Escribe un comando"></div>
+      </div>
+    </div>
+    <div class="zones" id="zones" aria-label="Las 4 zonas de Git"></div>
+  </section>
+  <section class="page" id="page" hidden></section>
+</main>
+
+<div class="modal" id="editor" hidden role="dialog" aria-modal="true" aria-label="Editor de texto">
+  <div class="nano">
+    <div class="nano-head"><span id="nanoTitle">GNU nano — archivo</span><span class="nano-keys"><kbd>Ctrl</kbd>+<kbd>S</kbd> guardar · <kbd>Esc</kbd> cancelar</span></div>
+    <textarea id="nanoText" spellcheck="false" aria-label="Contenido del archivo"></textarea>
+    <div class="nano-foot"><button class="btn" id="nanoSave">Guardar y salir</button><button class="btn ghost" id="nanoCancel">Cancelar</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/engine.js"></script>
+<script src="js/lessons.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
