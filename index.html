@@ -1,11 +1,961 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARTPOP! LAB — Prototipo Creativo Neo-Pop & Coleccionables</title>
+  <meta name="description" content="Prototipo completo en técnica ArtPop con colores saturados, semitonos retro, estética cómic brutalista y modo oscuro conmutado en JS.">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'pop-yellow': '#FFE600',
+            'pop-pink': '#FF2A85',
+            'pop-cyan': '#00F0FF',
+            'pop-orange': '#FF5E00',
+            'pop-purple': '#7928CA',
+            'pop-lime': '#10FFA0',
+            'pop-dark': '#0D0D12',
+            'pop-card': '#181824',
+          },
+          borderWidth: {
+            '3': '3px',
+            '4': '4px',
+            '5': '5px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Custom CSS -->
+  <link rel="stylesheet" href="./src/css/style.css">
 </head>
-<body>
+<body class="selection:bg-[#FF2A85] selection:text-white">
+
+  <!-- ===================================================
+       1. TOP MARQUEE TICKER (BANNER CONTINUO)
+       =================================================== -->
+  <div class="bg-[#FFE600] text-black border-b-3 border-black py-2 overflow-hidden whitespace-nowrap font-black text-xs md:text-sm tracking-wider uppercase z-50 relative select-none">
+    <div class="animate-marquee inline-flex gap-8 items-center">
+      <span>⚡ EDICIÓN LIMITADA: ARTPOP CAPSULE 2026</span>
+      <span>💥 ¡DÍLE ADIÓS AL BEIGE ABURRIDO!</span>
+      <span>🎨 INSPIRADO EN LICHTENSTEIN &amp; WARHOL</span>
+      <span>🚀 ENVÍOS A TODO EL PLANETA TIERRA</span>
+      <span>⭐ 100% SERIGRAFÍA Y TINTAS SÓLIDAS</span>
+      <span>⚡ EDICIÓN LIMITADA: ARTPOP CAPSULE 2026</span>
+      <span>💥 ¡DÍLE ADIÓS AL BEIGE ABURRIDO!</span>
+      <span>🎨 INSPIRADO EN LICHTENSTEIN &amp; WARHOL</span>
+      <span>🚀 ENVÍOS A TODO EL PLANETA TIERRA</span>
+      <span>⭐ 100% SERIGRAFÍA Y TINTAS SÓLIDAS</span>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       2. MAIN NAVBAR
+       =================================================== -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#121217]/95 backdrop-blur-md border-b-4 border-black dark:border-white transition-colors duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2 group focus:outline-none">
+        <div class="w-12 h-12 bg-[#FF2A85] border-3 border-black flex items-center justify-center pop-shadow-sm group-hover:rotate-6 transition-transform">
+          <span class="text-2xl">💥</span>
+        </div>
+        <div>
+          <span class="font-display text-3xl md:text-4xl text-black dark:text-white tracking-wide comic-stroke-yellow">
+            ARTPOP!
+          </span>
+          <span class="hidden sm:inline-block ml-2 text-[10px] font-black uppercase px-1.5 py-0.5 bg-[#00F0FF] text-black border border-black -rotate-3">
+            LAB v2.6
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+        <a href="#catalogo" class="px-3 py-1.5 font-bold text-sm tracking-wide border-2 border-transparent hover:border-black dark:hover:border-white hover:bg-[#FFE600] dark:hover:bg-[#FFE600] hover:text-black transition-all">
+          COLECCIÓN
+        </a>
+        <a href="#diy-studio" class="px-3 py-1.5 font-bold text-sm tracking-wide border-2 border-transparent hover:border-black dark:hover:border-white hover:bg-[#FF2A85] hover:text-white transition-all">
+          STUDIO DIY 🎨
+        </a>
+        <a href="#manifiesto" class="px-3 py-1.5 font-bold text-sm tracking-wide border-2 border-transparent hover:border-black dark:hover:border-white hover:bg-[#00F0FF] hover:text-black transition-all">
+          MANIFIESTO
+        </a>
+        <a href="#precios" class="px-3 py-1.5 font-bold text-sm tracking-wide border-2 border-transparent hover:border-black dark:hover:border-white hover:bg-[#10FFA0] hover:text-black transition-all">
+          PRECIOS
+        </a>
+        <a href="#comunidad" class="px-3 py-1.5 font-bold text-sm tracking-wide border-2 border-transparent hover:border-black dark:hover:border-white hover:bg-[#FF5E00] hover:text-white transition-all">
+          FAN CLUB
+        </a>
+      </nav>
+
+      <!-- Right Actions: Dark Mode Toggle & Cart -->
+      <div class="flex items-center gap-3">
+        
+        <!-- DARK MODE TOGGLE (CONTROLADO CON JS) -->
+        <button 
+          id="theme-toggle-btn"
+          type="button" 
+          aria-label="Alternar Modo Oscuro / Claro"
+          class="pop-btn flex items-center gap-2 px-3 py-2 border-3 border-black dark:border-[#FFE600] bg-white dark:bg-[#1E1E2E] text-black dark:text-white pop-shadow-sm font-black text-xs md:text-sm uppercase tracking-wider"
+        >
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg id="theme-icon-sun" class="w-5 h-5 text-[#FFE600] hidden" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+          </svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg id="theme-icon-moon" class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+          </svg>
+          <span class="hidden sm:inline" id="theme-label">DÍA</span>
+        </button>
+
+        <!-- Cart Trigger Button -->
+        <button 
+          id="open-cart-btn"
+          type="button" 
+          aria-label="Abrir bolsa de compras"
+          class="pop-btn relative flex items-center gap-2 px-3.5 py-2 border-3 border-black bg-[#FFE600] text-black pop-shadow-sm font-black text-xs md:text-sm uppercase tracking-wider hover:bg-[#FF2A85] hover:text-white transition-colors"
+        >
+          <span class="text-base">🛍️</span>
+          <span class="hidden sm:inline">BOLSA</span>
+          <span id="cart-count-badge" class="px-2 py-0.5 text-xs font-black bg-black text-white rounded-full transition-transform">
+            2
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ===================================================
+       3. HERO SECTION (EXPLOSIÓN VISUAL ARTPOP)
+       =================================================== -->
+  <section class="relative pt-12 pb-20 md:py-24 overflow-hidden bg-halftone-dots">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Column: Manifesto & Call to Action -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+          
+          <!-- Badge Ribbon -->
+          <div class="flex items-center gap-3">
+            <span class="px-4 py-1.5 bg-[#FF2A85] text-white border-3 border-black text-xs md:text-sm font-black uppercase tracking-wider pop-shadow-sm rotate-[-2deg]">
+              💥 MOVIMIENTO NEO-POP 2026
+            </span>
+            <span class="px-3 py-1 bg-[#10FFA0] text-black border-2 border-black text-xs font-bold rotate-[1deg]">
+              Roy &amp; Warhol Vibes
+            </span>
+          </div>
+
+          <!-- Main Hero Headline -->
+          <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-none text-black dark:text-white tracking-tight">
+            ¡EL ARTE NO PIDE <span class="text-[#FF2A85] underline decoration-wavy decoration-[#FFE600]">PERDÓN</span>, PIDE <span class="bg-[#FFE600] text-black px-2 inline-block -rotate-1 border-3 border-black">VOLUMEN</span>!
+          </h1>
+
+          <!-- Comic Speech Bubble Quote -->
+          <div class="speech-bubble-bottom p-5 bg-white dark:bg-[#181824] border-3 border-black dark:border-[#00F0FF] pop-shadow max-w-xl">
+            <p class="font-bold text-sm md:text-base text-gray-800 dark:text-gray-200 leading-relaxed">
+              «Si buscabas minimalismo beige corporativo, te equivocaste de galaxia. Aquí celebramos los semitonos de cómic, los colores flúor que saltan a los ojos y el arte que no teme ser ruidoso.»
+            </p>
+            <div class="mt-2 text-xs font-black text-[#FF2A85] uppercase tracking-wider">
+              — El Colectivo Pop Art Manifesto
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#catalogo" class="pop-btn px-6 py-4 bg-[#FF2A85] text-white border-3 border-black text-sm md:text-base font-black tracking-wider uppercase pop-shadow hover:bg-black transition-colors flex items-center gap-2">
+              <span>EXPLORAR DROPS</span>
+              <span class="text-xl">🚀</span>
+            </a>
+            <a href="#diy-studio" class="pop-btn px-6 py-4 bg-[#FFE600] text-black border-3 border-black text-sm md:text-base font-black tracking-wider uppercase pop-shadow hover:bg-[#00F0FF] transition-colors flex items-center gap-2">
+              <span>DISEÑA TU PÓSTER</span>
+              <span class="text-xl">🎨</span>
+            </a>
+          </div>
+
+          <!-- Counter Stats -->
+          <div class="grid grid-cols-3 gap-3 pt-6 border-t-3 border-black dark:border-white/30 max-w-lg">
+            <div class="p-3 bg-white dark:bg-[#1E1E2E] border-2 border-black pop-shadow-sm text-center">
+              <div class="font-display text-2xl md:text-3xl text-[#FF2A85]">100%</div>
+              <div class="text-[10px] md:text-xs font-black uppercase text-gray-700 dark:text-gray-300">Saturación</div>
+            </div>
+            <div class="p-3 bg-white dark:bg-[#1E1E2E] border-2 border-black pop-shadow-sm text-center">
+              <div class="font-display text-2xl md:text-3xl text-[#FFE600] dark:text-[#FFE600]">45K+</div>
+              <div class="text-[10px] md:text-xs font-black uppercase text-gray-700 dark:text-gray-300">Piezas Enviadas</div>
+            </div>
+            <div class="p-3 bg-white dark:bg-[#1E1E2E] border-2 border-black pop-shadow-sm text-center">
+              <div class="font-display text-2xl md:text-3xl text-[#00F0FF]">0%</div>
+              <div class="text-[10px] md:text-xs font-black uppercase text-gray-700 dark:text-gray-300">Aburrimiento</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive ArtPop Hero Canvas Visualizer -->
+        <div class="lg:col-span-5 relative">
+          
+          <!-- Decorative Floating Stickers -->
+          <div class="absolute -top-8 -left-6 z-20 animate-pop-wiggle">
+            <div class="w-16 h-16 md:w-20 md:h-20 bg-[#FFE600] border-3 border-black rounded-full flex items-center justify-center font-display text-black text-center text-xs md:text-sm font-black p-2 pop-shadow leading-tight">
+              POP! ART
+            </div>
+          </div>
+
+          <div class="absolute -bottom-6 -right-6 z-20 animate-pop-float">
+            <div class="px-4 py-2 bg-[#10FFA0] text-black border-3 border-black font-black text-xs md:text-sm uppercase pop-shadow rotate-3">
+              ★ EDICIÓN MUSEO ★
+            </div>
+          </div>
+
+          <!-- Main Hero Frame Container -->
+          <div class="relative bg-white dark:bg-[#1E1E2E] border-4 border-black dark:border-white p-4 pop-shadow-xl">
+            
+            <!-- Comic Halftone Poster Canvas -->
+            <div class="w-full bg-[#FFE600] border-3 border-black p-6 relative overflow-hidden bg-halftone-pink flex flex-col items-center justify-center min-h-[380px] md:min-h-[460px]">
+              
+              <!-- Pop Explosion SVG Graphic -->
+              <div class="relative z-10 w-full flex flex-col items-center">
+                <svg class="w-48 h-48 md:w-60 md:h-60 text-[#FF2A85] drop-shadow-[6px_6px_0px_#000] animate-pulse-grow" viewBox="0 0 100 100" fill="currentColor">
+                  <path stroke="#000" stroke-width="3" stroke-linejoin="round" d="M50 0 L64 25 L95 15 L85 45 L100 65 L70 75 L75 100 L45 85 L25 100 L30 70 L0 60 L15 35 L0 10 L30 20 Z"/>
+                  <text x="50" y="58" font-family="Bangers" font-size="20" fill="#FFE600" stroke="#000" stroke-width="1" text-anchor="middle">BOOM!</text>
+                </svg>
+
+                <div class="mt-4 px-4 py-1.5 bg-black text-white font-display text-2xl md:text-3xl uppercase tracking-wider border-2 border-white -rotate-2 pop-shadow-sm">
+                  ROY &amp; WARHOL 1964
+                </div>
+
+                <div class="mt-2 text-xs font-black uppercase text-black bg-[#00F0FF] px-3 py-1 border border-black rotate-1">
+                  SERIGRAFÍA PURA • SIN FILTROS
+                </div>
+              </div>
+
+              <!-- Retro Halftone Overlay Gradients -->
+              <div class="absolute inset-0 pointer-events-none bg-halftone-dense opacity-40"></div>
+            </div>
+
+            <!-- Frame Footer Bar -->
+            <div class="mt-3 flex items-center justify-between text-xs font-black text-black dark:text-white uppercase">
+              <span class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                <span>PIEZA #001 / MASTER</span>
+              </span>
+              <span class="bg-[#FFE600] text-black px-2 py-0.5 border border-black">
+                ARTPOP ARCHIVE
+              </span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       4. INTERACTIVE SECTION: ARTPOP DIY STUDIO GENERATOR
+       =================================================== -->
+  <section id="diy-studio" class="py-20 border-y-4 border-black dark:border-white bg-[#00F0FF]/15 dark:bg-[#121217] transition-colors relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Title -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="px-4 py-1 bg-[#10FFA0] text-black border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm inline-block mb-3">
+          GENERADOR EN TIEMPO REAL
+        </span>
+        <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-black dark:text-white tracking-wide">
+          STUDIO DIY: CREA TU ARTE POP
+        </h2>
+        <p class="mt-3 text-sm md:text-base font-medium text-gray-700 dark:text-gray-300">
+          Personaliza los semitonos, stickers, colores de fondo y slogans. Observa cómo la estética ArtPop cobra vida instantáneamente en el canvas interactivo.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Panel -->
+        <div class="lg:col-span-6 bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow-lg flex flex-col gap-6">
+          
+          <!-- 1. Text input -->
+          <div>
+            <label for="diy-text-input" class="block font-heading font-black text-sm text-black dark:text-white uppercase mb-2">
+              1. Tu Slogan / Frase Pop:
+            </label>
+            <input 
+              type="text" 
+              id="diy-text-input" 
+              maxlength="28" 
+              value="POP! NEVER SLEEPS"
+              class="w-full px-4 py-3 border-3 border-black dark:border-white bg-white dark:bg-[#121217] text-black dark:text-white font-display text-xl uppercase tracking-wider pop-shadow-sm focus:outline-none focus:ring-4 focus:ring-[#FFE600]"
+              placeholder="ESCRIBE TU SLOGAN AQUÍ..."
+            />
+          </div>
+
+          <!-- 2. Color Palette Selector -->
+          <div>
+            <span class="block font-heading font-black text-sm text-black dark:text-white uppercase mb-2">
+              2. Color de Fondo Sólido:
+            </span>
+            <div class="flex flex-wrap gap-3">
+              <button data-color="#FFE600" class="diy-color-pick w-10 h-10 border-3 border-black bg-[#FFE600] pop-shadow-sm ring-4 ring-black scale-110 transition-transform" title="Amarillo Pop"></button>
+              <button data-color="#FF2A85" class="diy-color-pick w-10 h-10 border-3 border-black bg-[#FF2A85] pop-shadow-sm transition-transform" title="Rosa Eléctrico"></button>
+              <button data-color="#00F0FF" class="diy-color-pick w-10 h-10 border-3 border-black bg-[#00F0FF] pop-shadow-sm transition-transform" title="Cian Cómic"></button>
+              <button data-color="#FF5E00" class="diy-color-pick w-10 h-10 border-3 border-black bg-[#FF5E00] pop-shadow-sm transition-transform" title="Naranja Tangerine"></button>
+              <button data-color="#10FFA0" class="diy-color-pick w-10 h-10 border-3 border-black bg-[#10FFA0] pop-shadow-sm transition-transform" title="Verde Lima"></button>
+              <button data-color="#FFFFFD" class="diy-color-pick w-10 h-10 border-3 border-black bg-white pop-shadow-sm transition-transform" title="Blanco Serigrafía"></button>
+            </div>
+          </div>
+
+          <!-- 3. Pattern / Halftone Selector -->
+          <div>
+            <span class="block font-heading font-black text-sm text-black dark:text-white uppercase mb-2">
+              3. Textura / Trama de Fondo:
+            </span>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button data-pattern="dots" class="diy-pattern-btn pop-btn px-3 py-2 border-2 border-black bg-black text-white font-bold text-xs uppercase pop-shadow-sm">
+                Puntos Retro
+              </button>
+              <button data-pattern="stripes" class="diy-pattern-btn pop-btn px-3 py-2 border-2 border-black bg-white dark:bg-gray-800 text-black dark:text-white font-bold text-xs uppercase pop-shadow-sm">
+                Rayas Pop
+              </button>
+              <button data-pattern="checker" class="diy-pattern-btn pop-btn px-3 py-2 border-2 border-black bg-white dark:bg-gray-800 text-black dark:text-white font-bold text-xs uppercase pop-shadow-sm">
+                Damero
+              </button>
+              <button data-pattern="clean" class="diy-pattern-btn pop-btn px-3 py-2 border-2 border-black bg-white dark:bg-gray-800 text-black dark:text-white font-bold text-xs uppercase pop-shadow-sm">
+                Liso Plano
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Sticker Choice -->
+          <div>
+            <span class="block font-heading font-black text-sm text-black dark:text-white uppercase mb-2">
+              4. Sticker / Icono Central:
+            </span>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+              <button data-sticker="boom" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-yellow-200 border-[#FF2A85] scale-110 flex items-center justify-center text-xl font-bold">
+                💥
+              </button>
+              <button data-sticker="lip" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-white dark:bg-gray-800 flex items-center justify-center text-xl font-bold">
+                👄
+              </button>
+              <button data-sticker="banana" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-white dark:bg-gray-800 flex items-center justify-center text-xl font-bold">
+                🍌
+              </button>
+              <button data-sticker="lightning" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-white dark:bg-gray-800 flex items-center justify-center text-xl font-bold">
+                ⚡
+              </button>
+              <button data-sticker="eye" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-white dark:bg-gray-800 flex items-center justify-center text-xl font-bold">
+                👁️
+              </button>
+              <button data-sticker="star" class="diy-sticker-btn pop-btn p-2 border-2 border-black dark:border-white bg-white dark:bg-gray-800 flex items-center justify-center text-xl font-bold">
+                ⭐
+              </button>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="flex flex-wrap gap-3 pt-3 border-t-2 border-dashed border-gray-300 dark:border-gray-700">
+            <button id="diy-random-btn" class="pop-btn px-4 py-2.5 bg-[#FFE600] text-black border-2 border-black font-black text-xs md:text-sm uppercase tracking-wider pop-shadow-sm flex items-center gap-2">
+              <span>Aleatorio 🎲</span>
+            </button>
+            <button id="diy-copy-btn" class="pop-btn px-4 py-2.5 bg-[#FF2A85] text-white border-2 border-black font-black text-xs md:text-sm uppercase tracking-wider pop-shadow-sm flex items-center gap-2">
+              <span>Guardar Póster ⭐</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Live Preview Canvas -->
+        <div class="lg:col-span-6 sticky top-28">
+          <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-4 pop-shadow-xl">
+            
+            <div class="text-xs font-black uppercase text-black dark:text-white mb-2 flex items-center justify-between">
+              <span class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-green-500 rounded-full animate-ping"></span>
+                <span>VISTA PREVIA EN VIVO (RENDER CANVAS)</span>
+              </span>
+              <span class="bg-black text-white px-2 py-0.5 text-[10px]">A4 • 300 DPI EQ</span>
+            </div>
+
+            <!-- The Live ArtPop Canvas -->
+            <div 
+              id="diy-canvas" 
+              class="w-full min-h-[380px] md:min-h-[440px] border-3 border-black p-6 flex flex-col justify-between items-center relative overflow-hidden transition-all duration-300 bg-halftone-dots"
+              style="background-color: #FFE600;"
+            >
+              <!-- Top Badge -->
+              <div class="z-10 self-start">
+                <span id="diy-canvas-badge" class="px-3 py-1 bg-black text-white text-xs font-black uppercase tracking-wider border-2 border-white rotate-[-3deg] inline-block pop-shadow-sm">
+                  100% POP
+                </span>
+              </div>
+
+              <!-- Center Sticker Graphic -->
+              <div id="diy-canvas-sticker" class="z-10 my-4 flex items-center justify-center">
+                <!-- Injected by JS -->
+              </div>
+
+              <!-- Big Bottom Slogan -->
+              <div class="z-10 w-full text-center">
+                <div 
+                  id="diy-canvas-text" 
+                  class="font-display text-3xl sm:text-4xl md:text-5xl text-black comic-stroke-cyan leading-tight uppercase break-words"
+                >
+                  POP! NEVER SLEEPS
+                </div>
+              </div>
+
+            </div>
+
+            <div class="mt-3 text-center">
+              <span class="text-xs font-bold text-gray-500 dark:text-gray-400">
+                Póster interactivo renderizado con Tailwind, CSS Grid y JavaScript reactivo
+              </span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================
+       5. CAPSULE COLLECTION (PRODUCTOS CON ESTILO ARTPOP)
+       =================================================== -->
+  <section id="catalogo" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
+    <!-- Section Title & Filter Tabs -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+      <div>
+        <span class="px-3 py-1 bg-[#FF2A85] text-white border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm inline-block mb-3">
+          DROPS EXCLUSIVOS
+        </span>
+        <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-black dark:text-white tracking-wide">
+          COLECCIÓN EN SERIE LIMITADA
+        </h2>
+        <p class="mt-2 text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium">
+          Piezas gráficas numeradas, fanzines de semitono y objetos coleccionables de autor.
+        </p>
+      </div>
+
+      <!-- Categories Navigation Pills -->
+      <div class="flex flex-wrap gap-2">
+        <button data-category="all" class="cat-filter-btn pop-btn px-4 py-2 border-2 border-black bg-black text-white dark:bg-[#FFE600] dark:text-black font-black text-xs uppercase pop-shadow-sm">
+          Todos
+        </button>
+        <button data-category="posters" class="cat-filter-btn pop-btn px-4 py-2 border-2 border-black bg-white dark:bg-[#1E1E2E] text-black dark:text-white font-black text-xs uppercase pop-shadow-sm">
+          Pósters
+        </button>
+        <button data-category="apparel" class="cat-filter-btn pop-btn px-4 py-2 border-2 border-black bg-white dark:bg-[#1E1E2E] text-black dark:text-white font-black text-xs uppercase pop-shadow-sm">
+          Prendas
+        </button>
+        <button data-category="toys" class="cat-filter-btn pop-btn px-4 py-2 border-2 border-black bg-white dark:bg-[#1E1E2E] text-black dark:text-white font-black text-xs uppercase pop-shadow-sm">
+          Vinyl Toys
+        </button>
+        <button data-category="zines" class="cat-filter-btn pop-btn px-4 py-2 border-2 border-black bg-white dark:bg-[#1E1E2E] text-black dark:text-white font-black text-xs uppercase pop-shadow-sm">
+          Zines
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Cards Grid (Populated dynamically by JS) -->
+    <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Injected by src/js/main.js -->
+    </div>
+
+  </section>
+
+  <!-- ===================================================
+       6. ARTPOP MANIFESTO: CÓMIC PANELS
+       =================================================== -->
+  <section id="manifiesto" class="py-20 border-t-4 border-black dark:border-white bg-[#FFE600]/15 dark:bg-[#0D0D12] transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="px-4 py-1 bg-[#7928CA] text-white border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm inline-block mb-3">
+          NUESTRA FILOSOFÍA VISUAL
+        </span>
+        <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-black dark:text-white tracking-wide">
+          LOS TRES MANDAMIENTOS POP
+        </h2>
+        <p class="mt-3 text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
+          Cómo transformamos la herencia de los cómics y la cultura de masas de los 60 en una estética brutalista moderna.
+        </p>
+      </div>
+
+      <!-- Comic Panels Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Panel 1: Lichtenstein Dots -->
+        <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow-lg relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-4 -top-4 w-20 h-20 bg-[#FF2A85] rounded-full border-3 border-black opacity-20 bg-halftone-dense"></div>
+          <div>
+            <div class="w-14 h-14 bg-[#FFE600] border-3 border-black flex items-center justify-center font-display text-3xl pop-shadow-sm mb-4">
+              01
+            </div>
+            <h3 class="font-heading text-2xl font-black text-black dark:text-white">
+              EL SEMITONO ES VIDA
+            </h3>
+            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              Los puntos Ben-Day nunca se esconden. En lugar de alisar las imágenes con degradados aburridos, ampliamos la trama mecánica para evidenciar el proceso de impresión.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t-2 border-black/10 dark:border-white/10 flex items-center gap-2 text-xs font-black uppercase text-[#FF2A85]">
+            <span>#BenDayDots</span>
+            <span>•</span>
+            <span>#RoyLichtenstein</span>
+          </div>
+        </div>
+
+        <!-- Panel 2: Warhol Repetition -->
+        <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow-lg relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-4 -top-4 w-20 h-20 bg-[#00F0FF] rounded-full border-3 border-black opacity-20 bg-stripes-yellow"></div>
+          <div>
+            <div class="w-14 h-14 bg-[#FF2A85] text-white border-3 border-black flex items-center justify-center font-display text-3xl pop-shadow-sm mb-4">
+              02
+            </div>
+            <h3 class="font-heading text-2xl font-black text-black dark:text-white">
+              CULTURA DE MASAS 2.0
+            </h3>
+            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              Elevamos lo cotidiano: latas, bocas gigantes, estrellas de cómic y tipografías que explotan. Si todo el mundo lo consume, merece convertirse en pieza de museo.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t-2 border-black/10 dark:border-white/10 flex items-center gap-2 text-xs font-black uppercase text-[#00F0FF]">
+            <span>#MassCulture</span>
+            <span>•</span>
+            <span>#WarholLegacy</span>
+          </div>
+        </div>
+
+        <!-- Panel 3: Neo-Brutalist Hard Shadows -->
+        <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow-lg relative overflow-hidden flex flex-col justify-between">
+          <div class="absolute -right-4 -top-4 w-20 h-20 bg-[#10FFA0] rounded-full border-3 border-black opacity-20 bg-comic-checker"></div>
+          <div>
+            <div class="w-14 h-14 bg-[#00F0FF] border-3 border-black flex items-center justify-center font-display text-3xl pop-shadow-sm mb-4">
+              03
+            </div>
+            <h3 class="font-heading text-2xl font-black text-black dark:text-white">
+              SOMBRAS DURAS &amp; BORDES
+            </h3>
+            <p class="mt-3 text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              Cero difuminados tímidos. Usamos sombras offset angulares de 5 a 12 píxeles con contornos negros de 3px y contrastes fluorescentes que saltan de la pantalla.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t-2 border-black/10 dark:border-white/10 flex items-center gap-2 text-xs font-black uppercase text-[#10FFA0]">
+            <span>#HardShadows</span>
+            <span>•</span>
+            <span>#BrutalistPop</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================
+       7. PRICING & COMMISSIONS TIERS
+       =================================================== -->
+  <section id="precios" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="px-4 py-1 bg-[#FF5E00] text-white border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm inline-block mb-3">
+        TARIFAS CLARAS
+      </span>
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-black dark:text-white tracking-wide">
+        COMISIONES &amp; EDICIONES POP
+      </h2>
+      <p class="mt-3 text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium">
+        Elige tu nivel de inmersión en el universo ArtPop. Sin letra pequeña ni tonos aburridos.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+      
+      <!-- Tier 1 -->
+      <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-black uppercase text-gray-500 tracking-wider">ENTRADA</div>
+          <h3 class="font-heading text-2xl font-black text-black dark:text-white mt-1">Boceto Pop Zine</h3>
+          <div class="mt-4 font-display text-5xl text-black dark:text-[#FFE600]">
+            $29 <span class="text-base font-sans text-gray-500 font-normal">/drop</span>
+          </div>
+          <p class="mt-3 text-xs text-gray-600 dark:text-gray-400">
+            Perfecto para comenzar tu colección gráfica con un toque retro de serigrafía.
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs font-bold text-gray-800 dark:text-gray-200">
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> 1 Póster digital A3 en alta resolución
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Texturas de semitonos descargables
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Fanzine digital en PDF de autor
+            </li>
+            <li class="flex items-center gap-2 text-gray-400 line-through">
+              <span>✕</span> Serigrafía física enmarcada
+            </li>
+          </ul>
+        </div>
+
+        <button onclick="addToCart('drop-04')" class="pop-btn w-full mt-8 py-3 bg-white dark:bg-gray-800 text-black dark:text-white border-3 border-black dark:border-white font-black text-xs uppercase tracking-wider pop-shadow-sm hover:bg-[#FFE600] hover:text-black transition-colors">
+          ELEGIR BOCETO POP
+        </button>
+      </div>
+
+      <!-- Tier 2 (Featured) -->
+      <div class="bg-[#FFE600] dark:bg-[#1E1E2E] border-4 border-black dark:border-[#FFE600] p-6 pop-shadow-xl relative flex flex-col justify-between md:-translate-y-4">
+        
+        <!-- Popular Starburst Badge -->
+        <div class="absolute -top-5 right-6">
+          <span class="px-3 py-1 bg-[#FF2A85] text-white border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm rotate-3 inline-block">
+            ★ EL MÁS CODICIADO ★
+          </span>
+        </div>
+
+        <div>
+          <div class="text-xs font-black uppercase text-black dark:text-[#FFE600] tracking-wider">DROP COMPLETO</div>
+          <h3 class="font-heading text-2xl md:text-3xl font-black text-black dark:text-white mt-1">Lichtenstein Master</h3>
+          <div class="mt-4 font-display text-5xl text-black dark:text-[#FFE600]">
+            $79 <span class="text-base font-sans text-gray-800 dark:text-gray-300 font-normal">/drop</span>
+          </div>
+          <p class="mt-3 text-xs text-gray-800 dark:text-gray-300 font-bold">
+            La experiencia física definitiva con lámina impresa en algodón y tintas flúor.
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs font-black text-black dark:text-white">
+            <li class="flex items-center gap-2">
+              <span class="text-black dark:text-[#FFE600] text-base">✓</span> 1 Lámina serigráfica 50x70cm numerada
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-black dark:text-[#FFE600] text-base">✓</span> Certificado de autenticidad sellado en cera
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-black dark:text-[#FFE600] text-base">✓</span> Pack de 6 stickers troquelados Pop
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-black dark:text-[#FFE600] text-base">✓</span> Acceso anticipado a futuros drops
+            </li>
+          </ul>
+        </div>
+
+        <button onclick="addToCart('drop-01')" class="pop-btn w-full mt-8 py-3.5 bg-[#FF2A85] text-white border-3 border-black font-black text-xs md:text-sm uppercase tracking-wider pop-shadow hover:bg-black transition-colors">
+          QUIERO EL MASTER DROP 💥
+        </button>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white p-6 pop-shadow flex flex-col justify-between">
+        <div>
+          <div class="text-xs font-black uppercase text-gray-500 tracking-wider">COLECCIONISTA VIP</div>
+          <h3 class="font-heading text-2xl font-black text-black dark:text-white mt-1">Warhol Factory VIP</h3>
+          <div class="mt-4 font-display text-5xl text-black dark:text-[#FFE600]">
+            $199 <span class="text-base font-sans text-gray-500 font-normal">/drop</span>
+          </div>
+          <p class="mt-3 text-xs text-gray-600 dark:text-gray-400">
+            Caja de coleccionista con escultura de vinilo, póster y arte personalizado.
+          </p>
+
+          <ul class="mt-6 space-y-3 text-xs font-bold text-gray-800 dark:text-gray-200">
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Figura de vinilo electro-laqueado
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Cuadro enmarcado con cristal antirreflejo
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Tu retrato estilo cómic personalizado
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-[#10FFA0] text-base font-black">✓</span> Envío prioritario express asegurado
+            </li>
+          </ul>
+        </div>
+
+        <button onclick="addToCart('drop-03')" class="pop-btn w-full mt-8 py-3 bg-[#00F0FF] text-black border-3 border-black font-black text-xs uppercase tracking-wider pop-shadow-sm hover:bg-[#FFE600] transition-colors">
+          UNIRSE A LA FACTORY 🚀
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================
+       8. TESTIMONIALS (COMIC SPEECH BUBBLES)
+       =================================================== -->
+  <section id="comunidad" class="py-20 border-t-4 border-black dark:border-white bg-[#FF2A85]/10 dark:bg-[#121217]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="px-4 py-1 bg-[#FFE600] text-black border-2 border-black font-black text-xs uppercase tracking-widest pop-shadow-sm inline-block mb-3">
+          VOCES DE LA REVOLUCIÓN
+        </span>
+        <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-black dark:text-white tracking-wide">
+          LO QUE DICE EL FAN CLUB
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Review 1 -->
+        <div class="flex flex-col gap-4">
+          <div class="speech-bubble-bottom p-5 bg-white dark:bg-[#181824] border-3 border-black dark:border-[#00F0FF] pop-shadow flex-1">
+            <div class="flex text-[#FFE600] text-lg mb-2">★★★★★</div>
+            <p class="font-bold text-sm text-gray-800 dark:text-gray-200">
+              «Mi sala de estar parecía el consultorio de un dentista. Colgué el póster de Roy y ahora mis amigos se toman fotos como si fuera una galería en Soho.»
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pl-4">
+            <div class="w-10 h-10 rounded-full bg-[#FFE600] border-2 border-black flex items-center justify-center font-black text-base">
+              👩‍🎤
+            </div>
+            <div>
+              <div class="font-heading font-black text-sm text-black dark:text-white">Sofía Navarro</div>
+              <div class="text-xs text-gray-500 font-bold">Coleccionista de Zines</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="flex flex-col gap-4">
+          <div class="speech-bubble-bottom p-5 bg-white dark:bg-[#181824] border-3 border-black dark:border-[#FF2A85] pop-shadow flex-1">
+            <div class="flex text-[#FFE600] text-lg mb-2">★★★★★</div>
+            <p class="font-bold text-sm text-gray-800 dark:text-gray-200">
+              «La figura de vinilo de la banana tiene una calidad demencial. El paquete llegó con stickers cómicos y confeti. ¡Una locura total!»
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pl-4">
+            <div class="w-10 h-10 rounded-full bg-[#00F0FF] border-2 border-black flex items-center justify-center font-black text-base">
+              🎨
+            </div>
+            <div>
+              <div class="font-heading font-black text-sm text-black dark:text-white">Mateo Castro</div>
+              <div class="text-xs text-gray-500 font-bold">Diseñador Gráfico</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="flex flex-col gap-4">
+          <div class="speech-bubble-bottom p-5 bg-white dark:bg-[#181824] border-3 border-black dark:border-[#FFE600] pop-shadow flex-1">
+            <div class="flex text-[#FFE600] text-lg mb-2">★★★★★</div>
+            <p class="font-bold text-sm text-gray-800 dark:text-gray-200">
+              «El generador DIY me permitió armar un print para mi estudio en 2 minutos. La estética artpop no pasa de moda jamás.»
+            </p>
+          </div>
+          <div class="flex items-center gap-3 pl-4">
+            <div class="w-10 h-10 rounded-full bg-[#10FFA0] border-2 border-black flex items-center justify-center font-black text-base">
+              ⚡
+            </div>
+            <div>
+              <div class="font-heading font-black text-sm text-black dark:text-white">Valeria R.</div>
+              <div class="text-xs text-gray-500 font-bold">Directora de Arte</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================
+       9. NEWSLETTER / DROP ALERTS (COMIC BLAST BANNER)
+       =================================================== -->
+  <section class="py-16 bg-[#FFE600] text-black border-y-4 border-black relative overflow-hidden bg-halftone-pink">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      
+      <div class="inline-block px-4 py-1 bg-black text-[#FFE600] font-black text-xs uppercase tracking-widest border-2 border-white -rotate-2 mb-4">
+        ALERTA VIP DE DROPS
+      </div>
+
+      <h2 class="font-display text-4xl sm:text-5xl md:text-6xl uppercase tracking-tight text-black comic-stroke-yellow">
+        ¡NO TE PIERDAS EL PRÓXIMO BOOM!
+      </h2>
+
+      <p class="mt-3 text-sm md:text-base font-bold max-w-xl mx-auto text-black">
+        Lanzamos tiradas de 50 a 200 piezas que vuelan en minutos. Suscríbete y recibe acceso prioritario 30 minutos antes.
+      </p>
+
+      <form id="newsletter-form" class="mt-8 max-w-lg mx-auto flex flex-col sm:flex-row gap-3">
+        <input 
+          type="email" 
+          id="newsletter-email" 
+          required 
+          placeholder="tu-email-favorito@correo.com"
+          class="flex-1 px-5 py-3.5 border-3 border-black bg-white text-black font-bold placeholder-gray-500 pop-shadow-sm focus:outline-none focus:ring-4 focus:ring-[#FF2A85]"
+        />
+        <button 
+          type="submit" 
+          class="pop-btn px-6 py-3.5 bg-[#FF2A85] text-white border-3 border-black font-black uppercase text-sm tracking-wider pop-shadow hover:bg-black transition-colors"
+        >
+          ¡ME APUNTO! 🚀
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ===================================================
+       10. FOOTER
+       =================================================== -->
+  <footer class="bg-black text-white pt-16 pb-12 border-t-4 border-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b-2 border-gray-800">
+        
+        <!-- Brand Info -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 bg-[#FF2A85] border-2 border-white flex items-center justify-center">
+              <span class="text-xl">💥</span>
+            </div>
+            <span class="font-display text-3xl text-[#FFE600]">ARTPOP!</span>
+          </div>
+          <p class="text-xs text-gray-400 font-medium leading-relaxed">
+            Laboratorio de prototipado gráfico y exploración visual inspirado en la técnica pop art, serigrafía clásica y neo-brutalismo.
+          </p>
+        </div>
+
+        <!-- Links Col 1 -->
+        <div>
+          <h4 class="font-heading text-sm font-black text-[#00F0FF] uppercase mb-4 tracking-wider">COLECCIONES</h4>
+          <ul class="space-y-2 text-xs font-bold text-gray-300">
+            <li><a href="#catalogo" class="hover:text-[#FFE600] transition-colors">Pósters Lichtenstein</a></li>
+            <li><a href="#catalogo" class="hover:text-[#FFE600] transition-colors">Juguetes de Vinilo</a></li>
+            <li><a href="#catalogo" class="hover:text-[#FFE600] transition-colors">Prendas Estampadas</a></li>
+            <li><a href="#catalogo" class="hover:text-[#FFE600] transition-colors">Fanzines Serigrafiados</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Col 2 -->
+        <div>
+          <h4 class="font-heading text-sm font-black text-[#10FFA0] uppercase mb-4 tracking-wider">HERRAMIENTAS</h4>
+          <ul class="space-y-2 text-xs font-bold text-gray-300">
+            <li><a href="#diy-studio" class="hover:text-[#FFE600] transition-colors">Generador DIY en Vivo</a></li>
+            <li><button onclick="toggleTheme()" class="hover:text-[#FFE600] transition-colors text-left">Alternar Modo Oscuro</button></li>
+            <li><a href="#manifiesto" class="hover:text-[#FFE600] transition-colors">Manifiesto Estético</a></li>
+            <li><a href="#precios" class="hover:text-[#FFE600] transition-colors">Comisiones Personalizadas</a></li>
+          </ul>
+        </div>
+
+        <!-- Social & Status -->
+        <div>
+          <h4 class="font-heading text-sm font-black text-[#FF2A85] uppercase mb-4 tracking-wider">CONÉCTATE</h4>
+          <div class="flex gap-2 mb-4">
+            <a href="#" class="pop-btn w-9 h-9 bg-white text-black border-2 border-white flex items-center justify-center font-black text-sm hover:bg-[#FFE600] transition-colors" title="Instagram">
+              IG
+            </a>
+            <a href="#" class="pop-btn w-9 h-9 bg-white text-black border-2 border-white flex items-center justify-center font-black text-sm hover:bg-[#00F0FF] transition-colors" title="TikTok">
+              TK
+            </a>
+            <a href="#" class="pop-btn w-9 h-9 bg-white text-black border-2 border-white flex items-center justify-center font-black text-sm hover:bg-[#10FFA0] transition-colors" title="Behance">
+              BE
+            </a>
+          </div>
+          <div class="p-3 bg-[#181824] border border-gray-700 text-[11px] text-gray-300">
+            <span class="inline-block w-2 h-2 rounded-full bg-green-400 mr-1.5"></span>
+            Modo Oscuro JS: <strong class="text-white">100% Nativo</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 font-bold">
+        <div>
+          © 2026 ARTPOP! LAB. Desarrollado exclusivamente con HTML, CSS, Tailwind y JavaScript.
+        </div>
+        <a href="#" class="hover:text-white transition-colors">
+          ↑ VOLVER ARRIBA
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ===================================================
+       11. CART SLIDE-OVER DRAWER
+       =================================================== -->
+  <div id="cart-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+  
+  <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-[#121217] border-l-4 border-black dark:border-white z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between pop-shadow-xl">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b-3 border-black dark:border-white bg-[#FFE600] dark:bg-[#1E1E2E] flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-2xl">🛍️</span>
+        <h3 class="font-display text-2xl text-black dark:text-white uppercase tracking-wider">
+          TU BOLSA POP
+        </h3>
+      </div>
+      <button id="close-cart-btn" class="pop-btn w-8 h-8 border-2 border-black bg-white dark:bg-black text-black dark:text-white flex items-center justify-center font-black text-sm">
+        ✕
+      </button>
+    </div>
+
+    <!-- Items List Container -->
+    <div id="cart-items-list" class="flex-1 p-5 overflow-y-auto space-y-4">
+      <!-- Injected by JS -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-5 border-t-3 border-black dark:border-white bg-gray-50 dark:bg-[#181824] space-y-3">
+      <div class="flex justify-between text-xs font-bold text-gray-600 dark:text-gray-400">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <div class="flex justify-between text-xs font-bold text-gray-600 dark:text-gray-400">
+        <span>Envío (Gratis > $100)</span>
+        <span id="cart-shipping">$0.00</span>
+      </div>
+      <div class="flex justify-between font-display text-2xl text-black dark:text-[#FFE600] pt-2 border-t-2 border-dashed border-gray-300 dark:border-gray-700">
+        <span>TOTAL</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+
+      <button id="cart-checkout-btn" class="pop-btn w-full py-3.5 bg-[#FF2A85] text-white border-3 border-black font-black text-sm uppercase tracking-wider pop-shadow hover:bg-black transition-colors flex items-center justify-center gap-2">
+        <span>PAGAR CON ESTILO</span>
+        <span>🚀</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- ===================================================
+       12. QUICK VIEW MODAL
+       =================================================== -->
+  <div id="quick-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#181824] border-4 border-black dark:border-white max-w-2xl w-full p-6 pop-shadow-xl relative">
+      <button onclick="closeQuickView()" class="pop-btn absolute top-4 right-4 w-9 h-9 border-2 border-black bg-[#FFE600] text-black font-black flex items-center justify-center text-sm z-20">
+        ✕
+      </button>
+      <div id="quick-modal-body">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================
+       13. FLOATING TOAST NOTIFICATION CONTAINER
+       =================================================== -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 max-w-sm"></div>
+
+  <!-- JavaScript Entry Point -->
+  <script src="./src/js/main.js"></script>
 </body>
 </html>
