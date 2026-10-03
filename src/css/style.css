@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Righteous&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+/* ===================================================
+   ARTPOP DESIGN SYSTEM & CORE UTILITIES
+   =================================================== */
+
+:root {
+  --pop-black: #111116;
+  --pop-yellow: #FFE600;
+  --pop-pink: #FF2A85;
+  --pop-cyan: #00F0FF;
+  --pop-orange: #FF5E00;
+  --pop-purple: #7928CA;
+  --pop-lime: #10FFA0;
+  --pop-white: #FFFFFD;
+  --pop-cream: #FFFDEB;
+  --pop-dark-bg: #0D0D12;
+  --pop-dark-card: #181822;
+  --pop-dark-surface: #222232;
+}
+
+/* Base Body Styles */
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--pop-black);
+  background-color: var(--pop-cream);
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.dark body {
+  color: #F8F8FC;
+  background-color: var(--pop-dark-bg);
+}
+
+/* Typography Classes */
+.font-display {
+  font-family: 'Bangers', cursive, impact;
+  letter-spacing: 0.05em;
+}
+
+.font-heading {
+  font-family: 'Righteous', cursive, sans-serif;
+}
+
+/* Comic Text Stroke Effects */
+.comic-stroke {
+  -webkit-text-stroke: 2px #000000;
+  text-shadow: 3px 3px 0px #000000;
+}
+
+.dark .comic-stroke {
+  -webkit-text-stroke: 1.5px #FFE600;
+  text-shadow: 3px 3px 0px #FF2A85;
+}
+
+.comic-stroke-pink {
+  -webkit-text-stroke: 2px #000000;
+  text-shadow: 4px 4px 0px var(--pop-pink);
+}
+
+.comic-stroke-cyan {
+  -webkit-text-stroke: 2px #000000;
+  text-shadow: 4px 4px 0px var(--pop-cyan);
+}
+
+.comic-stroke-yellow {
+  -webkit-text-stroke: 2px #000000;
+  text-shadow: 4px 4px 0px var(--pop-yellow);
+}
+
+/* ===================================================
+   HALFTONE & POP PATTERNS
+   =================================================== */
+
+/* Dot Halftones */
+.bg-halftone-dots {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.16) 18%, transparent 18%);
+  background-size: 16px 16px;
+}
+
+.dark .bg-halftone-dots {
+  background-image: radial-gradient(rgba(255, 230, 0, 0.18) 18%, transparent 18%);
+  background-size: 16px 16px;
+}
+
+.bg-halftone-dense {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.25) 24%, transparent 24%);
+  background-size: 10px 10px;
+}
+
+.dark .bg-halftone-dense {
+  background-image: radial-gradient(rgba(0, 240, 255, 0.22) 24%, transparent 24%);
+  background-size: 10px 10px;
+}
+
+.bg-halftone-pink {
+  background-image: radial-gradient(var(--pop-pink) 20%, transparent 20%);
+  background-size: 14px 14px;
+}
+
+.bg-halftone-cyan {
+  background-image: radial-gradient(var(--pop-cyan) 20%, transparent 20%);
+  background-size: 14px 14px;
+}
+
+.bg-halftone-yellow {
+  background-image: radial-gradient(var(--pop-yellow) 22%, transparent 22%);
+  background-size: 14px 14px;
+}
+
+/* Striped Patterns */
+.bg-stripes-yellow {
+  background-image: repeating-linear-gradient(45deg, #FFE600, #FFE600 14px, #FFDC00 14px, #FFDC00 28px);
+}
+
+.dark .bg-stripes-yellow {
+  background-image: repeating-linear-gradient(45deg, #1C1A06, #1C1A06 14px, #282508 14px, #282508 28px);
+}
+
+.bg-stripes-pink {
+  background-image: repeating-linear-gradient(45deg, #FF2A85, #FF2A85 14px, #E61972 14px, #E61972 28px);
+}
+
+.dark .bg-stripes-pink {
+  background-image: repeating-linear-gradient(45deg, #240A17, #240A17 14px, #3A1024 14px, #3A1024 28px);
+}
+
+.bg-stripes-cyan {
+  background-image: repeating-linear-gradient(45deg, #00F0FF, #00F0FF 14px, #00D2E0 14px, #00D2E0 28px);
+}
+
+/* Comic Checkerboard Pattern */
+.bg-comic-checker {
+  background-image: 
+    linear-gradient(45deg, rgba(0, 0, 0, 0.06) 25%, transparent 25%), 
+    linear-gradient(-45deg, rgba(0, 0, 0, 0.06) 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.06) 75%), 
+    linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.06) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.dark .bg-comic-checker {
+  background-image: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%), 
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%), 
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+}
+
+/* ===================================================
+   ARTPOP HARD SHADOWS (NEO-POP BRUTALIST)
+   =================================================== */
+
+.pop-shadow-sm {
+  box-shadow: 3px 3px 0px 0px #000000;
+}
+
+.dark .pop-shadow-sm {
+  box-shadow: 3px 3px 0px 0px #FFE600;
+}
+
+.pop-shadow {
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+.dark .pop-shadow {
+  box-shadow: 5px 5px 0px 0px #00F0FF;
+}
+
+.pop-shadow-lg {
+  box-shadow: 8px 8px 0px 0px #000000;
+}
+
+.dark .pop-shadow-lg {
+  box-shadow: 8px 8px 0px 0px #FF2A85;
+}
+
+.pop-shadow-xl {
+  box-shadow: 12px 12px 0px 0px #000000;
+}
+
+.dark .pop-shadow-xl {
+  box-shadow: 12px 12px 0px 0px #FFE600;
+}
+
+/* Specific Shadow Colors */
+.pop-shadow-pink {
+  box-shadow: 6px 6px 0px 0px var(--pop-pink);
+}
+
+.pop-shadow-yellow {
+  box-shadow: 6px 6px 0px 0px var(--pop-yellow);
+}
+
+.pop-shadow-cyan {
+  box-shadow: 6px 6px 0px 0px var(--pop-cyan);
+}
+
+/* Interactive Button Push States */
+.pop-btn {
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.pop-btn:hover {
+  transform: translate(-2px, -2px);
+}
+
+.pop-btn:active {
+  transform: translate(3px, 3px) !important;
+  box-shadow: 1px 1px 0px 0px #000000 !important;
+}
+
+.dark .pop-btn:active {
+  box-shadow: 1px 1px 0px 0px #00F0FF !important;
+}
+
+/* Speech Bubbles */
+.speech-bubble-bottom {
+  position: relative;
+}
+
+.speech-bubble-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 36px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 14px solid #000000;
+}
+
+.speech-bubble-bottom::before {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 38px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid #FFFFFF;
+  z-index: 10;
+}
+
+.dark .speech-bubble-bottom::before {
+  border-top-color: var(--pop-dark-card);
+}
+
+.dark .speech-bubble-bottom::after {
+  border-top-color: #00F0FF;
+}
+
+/* Starburst Clip-Path Badges */
+.starburst-badge {
+  clip-path: polygon(
+    50% 0%, 63% 18%, 85% 9%, 82% 31%, 100% 38%, 89% 56%, 
+    99% 75%, 79% 80%, 75% 100%, 55% 89%, 36% 98%, 31% 79%, 
+    10% 84%, 17% 63%, 0% 50%, 15% 35%, 5% 17%, 26% 20%, 30% 0%, 50% 12%
+  );
+}
+
+/* Marquee Animation */
+@keyframes pop-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: pop-marquee 20s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Floating & Wiggle Animations */
+@keyframes pop-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+}
+
+@keyframes pop-wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes pop-pulse-grow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+.animate-pop-float {
+  animation: pop-float 4s ease-in-out infinite;
+}
+
+.animate-pop-wiggle {
+  animation: pop-wiggle 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-grow {
+  animation: pop-pulse-grow 2s ease-in-out infinite;
+}
+
+/* Custom ArtPop Scrollbar */
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--pop-cream);
+  border-left: 3px solid #000000;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--pop-dark-bg);
+  border-left: 3px solid #333344;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pop-yellow);
+  border: 3px solid #000000;
+  border-radius: 0px;
+  box-shadow: inset 2px 2px 0px #FFFFFF;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pop-pink);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--pop-cyan);
+  border: 3px solid #111116;
+}
+
+/* Confetti Burst & Notification Toast */
+#toast-container {
+  pointer-events: none;
+}
